@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<title>Tool — Bộ công cụ Casio fx-580VN X</title>
+<style>
+* { box-sizing: border-box; }
+body { margin: 0; background: #000; color: #fff; font: 16px/1.5 Arial, Helvetica, sans-serif; }
+main { max-width: 760px; margin: 0 auto; padding: 16px; }
+h1 { margin: 0 0 4px; font-size: 28px; }
+h2 { margin: 0; font-size: 20px; }
+.card { background: #0d0d0d; border: 1px solid #333; padding: 16px; margin-bottom: 14px; }
+.sub { margin: 0 0 14px; color: #aaa; }
+.lab { display: flex; justify-content: space-between; font-weight: bold; margin-bottom: 4px; }
+input[type=text], textarea, select { width: 100%; font: inherit; padding: 8px 10px; border: 1px solid #555; background: #000; color: #fff; }
+#t { font-size: 18px; }
+.hint { font-size: 14px; color: #aaa; margin: 4px 0 12px; }
+.two { margin-bottom: 12px; }
+.two label { display: block; margin-bottom: 4px; }
+.btn, #go { width: 100%; padding: 10px; border: 0; background: #ff8f26; color: #000; font-size: 17px; font-weight: bold; cursor: pointer; }
+details { margin-top: 14px; }
+summary { cursor: pointer; font-weight: bold; }
+textarea { height: 190px; margin-top: 8px; font: 14px/1.4 Consolas, Menlo, monospace; }
+.rhead { display: flex; justify-content: space-between; align-items: center; margin: 20px 0 10px; }
+.small { font: inherit; padding: 5px 12px; border: 1px solid #555; background: #0d0d0d; color: #fff; cursor: pointer; }
+#st { color: #aaa; font-size: 14px; margin-left: 8px; }
+.step h3 { margin: 0 0 8px; font-size: 17px; color: #ff8f26; }
+.row { margin: 10px 0; }
+.row span.l { display: block; font-size: 14px; color: #aaa; margin-bottom: 3px; }
+code { display: block; background: #000; border: 1px solid #2a2a2a; padding: 6px 10px; font: 15px/1.4 Consolas, Menlo, monospace; white-space: pre-wrap; word-break: break-all; color: #ffe6c8; }
+.keys { display: flex; flex-wrap: wrap; gap: 6px 12px; }
+.grp { display: inline-flex; align-items: center; flex-wrap: wrap; gap: 3px; }
+kbd { display: inline-block; min-width: 28px; text-align: center; padding: 3px 8px; border: 1px solid #999; border-bottom-width: 3px; background: #fff; color: #000; font: bold 14px Arial, sans-serif; }
+kbd.s { color: #a35a00; }
+kbd.a { color: #c62828; }
+.grp b { margin-left: 4px; color: #ff8f26; }
+.line { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin: 5px 0; }
+.line .ch { min-width: 24px; font: bold 18px Arial, sans-serif; color: #ffe6c8; }
+.note { font-size: 14px; color: #aaa; margin: 8px 0 0; }
+.err { border-color: #ff8f26; }
+.miss { display: flex; gap: 8px; align-items: center; margin: 8px 0; }
+.miss input { width: 110px; font: bold 16px Consolas, monospace; padding: 6px; }
+.miss b { font-size: 20px; min-width: 24px; }
+.err button { font: inherit; padding: 5px 12px; border: 1px solid #fff; background: transparent; color: #fff; cursor: pointer; }
+footer { text-align: center; margin-top: 28px; font-size: 13px; color: #666; }
+
+.quickmax-card { margin-top: 30px; }
+.quickmax-card summary { padding: 8px 0; }
+.quickmax-card .row { margin: 16px 0; }
+.quickmax-card .row > strong { display: block; margin-bottom: 7px; color: #ff8f26; }
+.quickmax-card ul { padding-left: 22px; }
+.quickmax-card li { margin: 7px 0; }
+.quickmax-card code { margin: 7px 0; }
+
+ 
+.quickmax-link{display:inline-block;margin-top:4px;padding:10px 14px;border:1px solid #777;color:#fff;text-decoration:none;background:#191919}
+.quickmax-link:hover{background:#292929}
+
+.quickmax-guide { margin-top: 14px; }
+.quickmax-guide .qstep, .quickmax-guide .qnote { background:#111; border:1px solid #333; border-radius:8px; padding:14px; margin:14px 0; }
+.quickmax-guide h3 { margin:0 0 8px; color:#ff8f26; font-size:18px; }
+.quickmax-guide p { margin:8px 0; }
+.quickmax-guide .muted { color:#aaa; font-size:14px; }
+.quickmax-guide ol { padding-left:22px; }
+.quickmax-guide li { margin:8px 0; }
+.quickmax-guide img { display:block; width:100%; height:auto; margin:12px 0; border:1px solid #444; border-radius:6px; }
+.quickmax-guide .formula { white-space:pre-wrap; overflow-wrap:anywhere; font: 13px/1.65 Consolas, monospace; background:#080808; color:#eee; border:1px solid #333; border-radius:7px; padding:12px; margin:10px 0; }
+.quickmax-guide kbd { display:inline-block; background:#222; color:#fff; border:1px solid #777; border-radius:4px; padding:2px 5px; }
+
+
+/* --- Tool Spell visual refresh --- */
+:root{color-scheme:dark;--bg:#0a0d14;--panel:#111722;--panel2:#151d2b;--line:#263246;--muted:#9aa8bd;--text:#f2f6fc;--accent:#8b9cff;--accent2:#6ce5d2;--warm:#ffc078}
+html{scroll-behavior:smooth}
+body{background:radial-gradient(ellipse at 10% -10%,rgba(105,126,255,.17),transparent 36%),radial-gradient(ellipse at 100% 15%,rgba(71,218,196,.09),transparent 30%),var(--bg);color:var(--text);font:15px/1.65 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;letter-spacing:.01em}
+main{max-width:920px;padding:24px 20px 48px}
+.site-header{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:0 0 26px;padding:4px 2px 20px;border-bottom:1px solid rgba(147,164,193,.16)}
+.brand{display:inline-flex;align-items:center;gap:12px;color:inherit;text-decoration:none}.brand-mark{display:grid;place-items:center;width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,#a7b2ff,#68e5d2);color:#0b1120;font-size:15px;font-weight:900;letter-spacing:-.08em;box-shadow:0 8px 30px #7186ff25}.brand-copy{display:flex;flex-direction:column;line-height:1.25}.brand-copy strong{font-size:20px;letter-spacing:-.04em}.brand-copy small{margin-top:4px;font-size:10px;font-weight:800;letter-spacing:.13em;color:var(--muted)}.brand-sep{color:var(--accent2);padding:0 3px}
+.header-pill{display:flex;align-items:center;gap:9px;padding:8px 12px;border:1px solid #29364a;border-radius:999px;color:#b8c5d8;font-size:12px;background:#111722b8}.live-dot{width:7px;height:7px;border-radius:50%;background:var(--accent2);box-shadow:0 0 0 4px #6ce5d218}
+.card{background:linear-gradient(145deg,rgba(21,29,43,.97),rgba(14,19,29,.97));border:1px solid var(--line);border-radius:22px;padding:26px;margin-bottom:18px;box-shadow:0 18px 50px rgba(0,0,0,.14)}
+h1{font-size:clamp(30px,5vw,42px);line-height:1.12;letter-spacing:-.055em;margin:0 0 9px}h2{font-size:22px;line-height:1.3;letter-spacing:-.035em}h3{letter-spacing:-.02em}
+.sub{color:var(--muted);margin:0 0 22px}.card>h1:after{content:"";display:block;width:54px;height:3px;border-radius:4px;background:linear-gradient(90deg,var(--accent),var(--accent2));margin-top:18px}
+label,.lab{font-size:13px;font-weight:700;color:#dce5f3}.lab{align-items:center;margin-bottom:8px}.lab span{color:var(--accent2);font-variant-numeric:tabular-nums}
+input[type=text],textarea,select{width:100%;font:inherit;color:var(--text);background:#0b111b;border:1px solid #303e53;border-radius:12px;padding:12px 14px;outline:none;transition:border-color .18s,box-shadow .18s,background .18s}input[type=text]:focus,textarea:focus,select:focus{border-color:#8b9cff;box-shadow:0 0 0 3px #8b9cff20;background:#0e1522}#t{font-size:18px;min-height:52px}.two{margin:18px 0}.two label{display:block;margin-bottom:8px}.hint,.note{color:var(--muted);font-size:13px}.hint{margin:8px 0 16px}
+.btn,#go{width:100%;padding:13px 18px;border:0;border-radius:12px;background:linear-gradient(110deg,#a8b3ff,#70e6d3);color:#0b1220;font-size:15px;font-weight:850;letter-spacing:.01em;cursor:pointer;box-shadow:0 8px 22px #8b9cff20;transition:transform .16s,filter .16s,box-shadow .16s}.btn:hover,#go:hover{filter:brightness(1.06);transform:translateY(-1px);box-shadow:0 12px 26px #8b9cff2b}.btn:active,#go:active{transform:translateY(0)}
+details{margin-top:18px;border-top:1px solid #263246;padding-top:15px}summary{cursor:pointer;font-weight:750;color:#dce5f3}summary::marker{color:var(--accent)}textarea{height:190px;margin-top:10px;font:13px/1.6 ui-monospace,SFMono-Regular,Consolas,monospace}
+.rhead{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:28px 2px 14px}.rhead h2{margin:0}.small{font:inherit;font-size:12px;font-weight:750;padding:8px 12px;border:1px solid #3a4961;border-radius:10px;background:#182233;color:#e7edfa;cursor:pointer;transition:background .15s,border-color .15s}.small:hover{background:#25324a;border-color:#7587b4}#st{color:var(--accent2);font-size:12px}
+#out .card{padding:20px;border-radius:16px}.step h3,.quickmax-guide h3{color:var(--accent2)}code,.quickmax-guide .formula{display:block;background:#090e16;border:1px solid #2a374b;border-radius:12px;padding:13px 15px;color:#dce5ff;font:13px/1.75 ui-monospace,SFMono-Regular,Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere}.keys{gap:7px 10px}kbd{min-width:30px;border:1px solid #54627a;border-bottom-width:3px;border-radius:7px;background:#e9eef8;color:#121827;font:750 13px ui-sans-serif,system-ui;padding:4px 8px}kbd.s{color:#6a4bd3}kbd.a{color:#bc3849}.grp b{color:var(--accent2)}
+.quickmax-card{margin-top:0}.quickmax-guide .qstep,.quickmax-guide .qnote{background:#101722;border:1px solid #29364a;border-radius:15px;padding:17px;margin:13px 0}.quickmax-guide h3{font-size:16px}.quickmax-guide img{border:1px solid #35445a;border-radius:12px}.quickmax-link{border:1px solid #52617b;border-radius:10px;color:#eaf0ff;background:#182233;padding:10px 14px}.quickmax-link:hover{background:#26334a}
+#inject-dino .qnote{background:linear-gradient(135deg,#292014,#171923)!important;border-color:#6d5434!important;border-radius:14px!important}#inject-dino .qnote strong{color:var(--warm)!important}.qstep{margin:14px 0}#inject-dino .qstep h3{font-size:15px;color:var(--accent2)}#inject-dino .formula{overflow-x:auto;word-break:normal;overflow-wrap:anywhere}
+footer{color:#728098;border-top:1px solid #202b3c;padding-top:18px;font-size:12px;letter-spacing:.08em}.dev{display:flex;align-items:center;gap:7px}.dev span{color:var(--accent2)}
+@media(max-width:600px){main{padding:16px 12px 34px}.site-header{align-items:flex-start;margin-bottom:18px}.header-pill{font-size:10px;max-width:150px;line-height:1.4;padding:8px 10px}.brand-mark{width:40px;height:40px}.brand-copy strong{font-size:18px}.card{padding:19px;border-radius:17px}.rhead{align-items:flex-start;flex-wrap:wrap}.rhead h2{font-size:20px}.quickmax-guide .qstep,.quickmax-guide .qnote{padding:13px}.quickmax-guide .formula,code{font-size:12px;padding:11px}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+
+
+
+/* --- Classic, understated redesign: less glossy, more handmade --- */
+:root{
+  color-scheme: light;
+  --bg:#f2f0e9;
+  --panel:#fffefa;
+  --panel2:#f7f5ee;
+  --line:#d7d2c6;
+  --muted:#716e65;
+  --text:#242923;
+  --accent:#315b50;
+  --accent2:#9a5b32;
+  --warm:#8c4d28;
+}
+html{scroll-behavior:smooth}
+body{
+  background:#f2f0e9;
+  color:#242923;
+  font:15px/1.65 Arial,Helvetica,sans-serif;
+  letter-spacing:0;
+}
+main{max-width:850px;margin:0 auto;padding:25px 20px 46px}
+.site-header{
+  border-bottom:2px solid #315b50;
+  padding:4px 2px 17px;margin-bottom:22px;
+}
+.brand{gap:11px}
+.brand-mark{
+  width:43px;height:43px;border-radius:5px;
+  background:#315b50;color:#fff;font-size:14px;
+  letter-spacing:-.04em;box-shadow:none;border:1px solid #24463d;
+}
+.brand-copy strong{font-size:21px;letter-spacing:-.5px;color:#263c34}
+.brand-copy small{font-size:10px;letter-spacing:.09em;color:#716e65}
+.brand-sep{color:#9a5b32}
+.header-pill{
+  border:1px solid #d7d2c6;border-radius:5px;
+  color:#55584f;background:#fffefa;font-size:12px;
+}
+.live-dot{background:#66836a;box-shadow:none}
+.card{
+  background:#fffefa;border:1px solid #d7d2c6;border-radius:7px;
+  padding:23px;margin-bottom:15px;box-shadow:0 2px 5px #26291d0a;
+}
+h1{font-size:clamp(28px,4.5vw,36px);line-height:1.2;letter-spacing:-.8px;color:#263c34}
+h2{font-size:21px;letter-spacing:-.35px;color:#263c34}
+h3{letter-spacing:0}
+.card>h1:after{
+  width:48px;height:3px;border-radius:0;
+  background:#9a5b32;margin-top:13px;
+}
+label,.lab{font-size:13px;color:#373d35;font-weight:700}
+input[type=text],textarea,select{
+  color:#242923;background:#fff;border:1px solid #c9c4b8;
+  border-radius:5px;padding:11px 12px;box-shadow:none;
+}
+input[type=text]:focus,textarea:focus,select:focus{
+  border-color:#315b50;box-shadow:0 0 0 2px #315b5018;background:#fff;
+}
+#t{font-size:17px;min-height:48px}
+.sub,.hint,.note{color:#716e65}
+.btn,#go{
+  border:1px solid #24463d;border-radius:5px;
+  background:#315b50;color:#fff;font-size:15px;font-weight:700;
+  box-shadow:none;transition:background .15s;
+}
+.btn:hover,#go:hover{background:#24463d;filter:none;transform:none;box-shadow:none}
+.btn:active,#go:active{transform:none}
+details{border-top:1px solid #e0dcd2}
+summary{color:#30382f}
+summary::marker{color:#9a5b32}
+textarea{background:#fff;font:13px/1.6 Consolas,Monaco,monospace}
+.rhead{margin:24px 2px 12px}
+.small{
+  border:1px solid #c9c4b8;border-radius:5px;
+  background:#f7f5ee;color:#30382f;font-size:12px;
+}
+.small:hover{background:#ece9df;border-color:#9b9a8d}
+#st{color:#315b50}
+#out .card{padding:18px;border-radius:6px}
+.step h3,.quickmax-guide h3{color:#315b50}
+code,.quickmax-guide .formula{
+  background:#f5f3ec;border:1px solid #ded9cd;border-radius:5px;
+  color:#26352d;padding:12px 14px;font-size:13px;
+}
+kbd{
+  border:1px solid #c8c5bb;border-bottom-width:2px;border-radius:4px;
+  background:#f0eee7;color:#242923;box-shadow:none;
+}
+kbd.s{color:#5c4a8a}kbd.a{color:#9b3b31}
+.grp b{color:#9a5b32}
+.line .ch{color:#8c4d28}
+.quickmax-guide .qstep,.quickmax-guide .qnote{
+  background:#f9f7f0;border:1px solid #ded9cd;border-radius:6px;padding:15px;
+}
+.quickmax-guide .formula{background:#f3f0e7;color:#27362e;border-radius:5px}
+.quickmax-guide img{border:1px solid #d7d2c6;border-radius:5px}
+.quickmax-link{
+  border:1px solid #315b50;border-radius:5px;color:#315b50;
+  background:#fffefa;padding:9px 13px;
+}
+.quickmax-link:hover{background:#edf1eb}
+#inject-dino .qnote{
+  background:#f7efe5!important;border-color:#d8bda3!important;border-radius:6px!important;
+}
+#inject-dino .qnote strong{color:#8c4d28!important}
+#inject-dino .qstep h3{color:#315b50}
+#inject-dino .formula{background:#f5f3ec;color:#26352d}
+footer{
+  color:#77746a;border-top:1px solid #d7d2c6;padding-top:16px;
+  font-size:11px;letter-spacing:.06em;
+}
+.dev span{color:#315b50}
+@media(max-width:600px){
+  main{padding:15px 12px 30px}
+  .site-header{gap:10px}
+  .header-pill{max-width:145px;font-size:10px;line-height:1.4;border-radius:5px}
+  .card{padding:17px;border-radius:6px}
+  .brand-mark{width:39px;height:39px;border-radius:5px}
+  .brand-copy strong{font-size:18px}
+  .quickmax-guide .qstep,.quickmax-guide .qnote{padding:12px}
+}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+
+
+
+/* --- All-black Casio toolkit theme + clearer instructions --- */
+:root{
+  color-scheme:dark;
+  --bg:#000000;--panel:#080808;--panel2:#101010;--line:#353535;
+  --muted:#d0d0d0;--text:#ffffff;--accent:#ffb347;--accent2:#ffd27a;--warm:#ffd27a;
+}
+html,body{background:#000!important;color:#fff!important}
+body{font:16px/1.7 Arial,Helvetica,sans-serif;letter-spacing:0}
+main{max-width:900px;padding:20px 16px 42px}
+.site-header{border-bottom:2px solid #ffb347;padding-bottom:16px;margin-bottom:20px}
+.brand-mark{background:#111!important;color:#ffbf59!important;border:2px solid #ffb347!important;border-radius:6px!important;box-shadow:none!important}
+.brand-copy strong{color:#fff!important;font-size:22px}
+.brand-copy small{color:#ffd27a!important;font-size:11px}
+.brand-sep,.grp b,.live-dot{color:#ffd27a!important;background:#ffb347!important}
+.header-pill{background:#101010!important;color:#fff!important;border:1px solid #555!important;border-radius:5px!important}
+.card,#out .card{background:#080808!important;color:#fff!important;border:1px solid #444!important;border-radius:8px!important;box-shadow:none!important}
+h1,h2,h3,.step h3,.quickmax-guide h3{color:#ffd27a!important}
+.card>h1:after{background:#ffb347!important;border-radius:0!important}
+.sub,.hint,.note,.quickmax-guide .muted,.row span.l{color:#e0e0e0!important}
+label,.lab,.lab span{color:#fff!important;font-size:15px!important;font-weight:700!important}
+input[type=text],textarea,select{background:#000!important;color:#fff!important;border:1px solid #777!important;border-radius:5px!important;font-size:16px!important;padding:12px!important}
+input[type=text]:focus,textarea:focus,select:focus{border-color:#ffb347!important;box-shadow:0 0 0 2px #ffb34733!important}
+.btn,#go{background:#ffb347!important;color:#000!important;border:1px solid #ffcf7b!important;border-radius:5px!important;font-size:17px!important;font-weight:800!important;box-shadow:none!important}
+.btn:hover,#go:hover{background:#ffd27a!important;transform:none!important;filter:none!important}
+.small,.quickmax-link{background:#171717!important;color:#fff!important;border:1px solid #777!important;border-radius:5px!important}
+.small:hover,.quickmax-link:hover{background:#292929!important;border-color:#ffb347!important}
+details{border-top:1px solid #444!important}
+summary{color:#fff!important;font-size:16px!important;font-weight:800!important;padding:7px 0}
+summary::marker{color:#ffb347!important}
+code,.quickmax-guide .formula{background:#000!important;color:#fff!important;border:1px solid #555!important;border-left:4px solid #ffb347!important;border-radius:4px!important;font-size:14px!important;line-height:1.8!important;overflow-wrap:anywhere}
+.quickmax-guide .qstep,.quickmax-guide .qnote,#inject-dino .qnote{background:#0c0c0c!important;border:1px solid #555!important;border-radius:6px!important;padding:16px!important;color:#fff!important}
+#inject-dino .qnote strong{color:#ffd27a!important}
+.quickmax-guide li,.quickmax-guide p,.quickmax-guide .qstep p,.quickmax-guide .qnote p{color:#f5f5f5!important;font-size:15px!important;line-height:1.8!important}
+.quickmax-guide h3{font-size:18px!important}
+kbd{background:#f2f2f2!important;color:#000!important;border:1px solid #aaa!important;border-bottom-width:3px!important;border-radius:4px!important;font-size:14px!important}
+kbd.s{color:#6a3cb5!important}kbd.a{color:#b51e2b!important}
+.err{border-color:#ffb347!important}
+footer{color:#ccc!important;border-top:1px solid #444!important;font-size:13px!important}
+#st{color:#ffd27a!important;font-weight:700}
+/* Make the guide and operation sequence easier to scan */
+.quickmax-guide ol{padding-left:26px!important}
+.quickmax-guide li{padding-left:3px;margin:10px 0!important}
+.qstep,.qnote{scroll-margin-top:16px}
+@media(max-width:600px){main{padding:14px 10px 30px}.card{padding:16px!important}h1{font-size:27px!important}.brand-copy strong{font-size:19px}.header-pill{max-width:140px;white-space:normal}.quickmax-guide .qstep,.quickmax-guide .qnote{padding:12px!important}code,.quickmax-guide .formula{font-size:13px!important}}
+
+</style>
+</head>
+<body>
+<main>
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="Tool trang chủ"><span class="brand-mark">T</span><span class="brand-copy"><strong>Tool</strong><small>BY: PHUC <span class="brand-sep">·</span> CASIO TOOLKIT</small></span></a>
+    <div class="header-pill"><span class="live-dot"></span> Bộ công cụ dành cho fx-580VN X</div>
+  </header>
+  <div id="top"></div>
+  <section class="card" style="margin-bottom:16px;">
+    <label for="page-choice">Chọn chức năng</label>
+    <select id="page-choice">
+      <option value="spell">Spell</option>
+      <option value="quickcpymax">Hướng dẫn Quickcpymax</option>
+      <option value="inject-dino">Inject - Khủng Long Mất Mạng</option>
+    </select>
+  </section>
+  <div id="spell-view">
+  <section class="card">
+    <h1>Tool</h1>
+    <p class="sub">Công cụ Spell cho Casio fx-580VN X</p>
+    <div class="two">
+      <label for="mode">Chọn chế độ</label>
+      <select id="mode">
+        <option value="normal">Spell bình thường (tối đa 17 ký tự)</option>
+      </select>
+    </div>
+    <div class="lab"><label for="t" id="lt">Text to Spell</label><span id="cnt">0/17</span></div>
+    <input type="text" id="t" maxlength="17" placeholder="Nhập câu cần spell" autocomplete="off" spellcheck="false">
+    <p class="hint" id="hint">Tối đa 17 ký tự (tính cả dấu cách). Thiếu thì web tự thêm dấu cách cho đủ.</p>
+    <div class="two">
+      <div><label for="pad">Thêm dấu cách vào</label>
+        <select id="pad"><option value="c">hai đầu (chia đều)</option><option value="r">cuối câu</option><option value="l">đầu câu</option></select></div>
+    </div>
+    <button id="go" class="btn">Spell</button>
+    <details>
+      <summary>Bảng ký tự</summary>
+      <p class="hint">Mỗi dòng 1 ký tự: "ký tự + phím" là công thức 1, "ký tự + hex:XXXX" là mã hex. Chữ nào không có công thức 1 thì dùng hex, chữ tiếng Anh chưa khai báo thì lấy mã ASCII. Dấu cách ghi là SPACE. Bảng được lưu lại trên máy.</p>
+      <textarea id="tab" spellcheck="false"></textarea>
+    </details>
+  </section>
+ 
+  <div class="rhead"><h2>Kết quả</h2><div><button id="copy" class="small">Copy hết</button><span id="st"></span></div></div>
+  <div id="out"></div>
+ 
+  </div>
+
+  <section class="card quickmax-card" id="quickmax" style="margin-top: 0; display:none;">
+    <h2 style="margin-bottom: 6px;">Vào font chữ nhỏ</h2>
+    <div class="quickmax-guide">
+      <section class="qstep"><h3>1. Xóa cài đặt</h3><pre class="formula">SHIFT 9 3 = =</pre></section>
+      <section class="qstep"><h3>2. Cài đặt</h3><pre class="formula">SHIFT MENU 1 3</pre></section>
+      <section class="qstep"><h3>3. Basic overflow</h3><pre class="formula">x ALPHA CALC SHIFT x x SHIFT ) 9 SHIFT ) 9 9 9 CALC = AC ◀ DEL DEL CALC = ◀ SHIFT .</pre></section>
+      <section class="qstep"><h3>4. Tiếp tục</h3><pre class="formula">SHIFT . ◀ ◀ DEL ▼ SHIFT 8 ▼ 2 6 ◀ ◀ ▶ 9 DEL ◀ ) +</pre><p>Nhập 100 số bất kì, bấm <strong>+</strong>, nhập 13 số bất kì rồi bấm <strong>CALC =</strong>.</p></section>
+      <section class="qstep"><h3>5. Hoàn tất</h3><p>Nhập 48 số bất kì, rồi bấm:</p><pre class="formula">SHIFT cos SHIFT x⁻¹ 2 = AC</pre></section>
+      <section class="qnote"><h3>Bắt đầu Quickcpymax</h3><p class="sub">Sau khi vào font chữ nhỏ, tiếp tục lần lượt các lượt 2.1–2.4 bên dưới.</p></section>
+    </div>
+    <h2 style="margin: 20px 0 6px;">Vào Quickcpymax (QuickPyMax), bước 2</h2>
+    <p class="sub">Trước mỗi lượt, bấm <strong>1/2 Basic overflow</strong>:</p>
+    <pre class="formula">x ALPHA CALC SHIFT x x SHIFT ) 9 SHIFT ) 9 CALC = ◀ SHIFT .</pre>
+    <div class="quickmax-guide">
+      <section class="qstep"><h3>Lượt 2.1</h3>
+      <pre class="formula">SHIFT 7 3 7 SHIFT 7 3 (-) SHIFT 7 3 7 SHIFT 7 3 x⁻¹ SHIFT 7 3
+(-) SHIFT 7 3 °′″ SHIFT 7 3 (-) ◀ × DEL ◀ × DEL ◀ × DEL ◀
+× DEL ◀ × DEL ◀ × DEL ◀ × DEL DEL DEL DEL DEL DEL DEL DEL DEL DEL
+DEL ◀ 1 2 3 4 5 6 ▶ ALPHA ∫□ ALPHA (-) ALPHA CALC 1 0 . 0
+0 0 ▶ 0 ▶ 1 ▶ 2 1 ▶ 8 0 ALPHA ∫□ ALPHA °′″ ALPHA CALC 1
+0 . 2 8 0 ▶ 1 0 2 2 0 3 ▶ 9 CALC = = = =</pre>
+      <pre class="formula">x ALPHA CALC SHIFT x x SHIFT ) 9 SHIFT ) 9 CALC = ◀ SHIFT . SHIFT 7
+4 8 SHIFT 7 4 9 SHIFT 7 1 4 ◀ × DEL ◀ × DEL ◀ × DEL
+DEL DEL DEL DEL DEL DEL DEL DEL DEL DEL ◀ 1 2 3 4 5 6 ▶ ALPHA
+∫□ ▶ ALPHA CALC ALPHA (-) ALPHA ∫□ ▶ ALPHA CALC ALPHA °′″ ALPHA ∫□ ▶ ALPHA
+CALC 1 2 3 CALC = = = = ▲ ◀ DEL DEL DEL ◀ ◀ DEL ◀ ◀
+◀ ◀ DEL DEL DEL ▲</pre>
+      <p><strong>Nhập 48 số bất kì</strong></p>
+      <pre class="formula">OPTN 2 2 SHIFT cos 1 0 ▶ SHIFT x⁻¹ □/□ ▶ 0 0 ▶ x² □/□ OPTN 3 3 0 0
+√□ ▶ 2 0 0 0 3 ALPHA ∫□ 0 0 0 0 0 ▶ 0 ▶ . OPTN
+2 1 ▶ ▶ 6 OPTN 3 6 2 0 ▶ ln 1 0 SHIFT x^□ SHIFT x⁻¹ 0
+0 ▶ ▶ 0 0 ( = AC</pre>
+      </section>
+      <section class="qstep"><h3>Lượt 2.2</h3>
+      <pre class="formula">SHIFT 7 4 8 SHIFT 7 3 8 SHIFT 7 3 °′″ SHIFT 7 3 (-) SHIFT 7 3
+7 SHIFT 7 3 x⁻¹ SHIFT 7 3 7 SHIFT 7 4 9 SHIFT 7 3 9 SHIFT 7
+3 °′″ SHIFT 7 3 °′″ ◀ × DEL ◀ × DEL ◀ × DEL ◀ × DEL ◀
+× DEL ◀ × DEL ◀ × DEL ◀ × DEL ◀ × DEL ◀ × DEL ◀ × DEL
+DEL DEL DEL DEL DEL DEL DEL DEL DEL DEL ◀ 1 2 3 4 5 6 ▶ ALPHA
+∫□ ▶ ALPHA CALC 1 0 . 0 0 0 ▶ ▶ ▶ 1 ▶ 2 1 ▶ ▶
+0 ALPHA ∫□ ▶ ALPHA CALC 1 9 ▶ 6 2 ▶ 0 ▶ 9 2 3 CALC =
+= = ▲ ◀ ◀ ◀ ◀ ◀ DEL DEL DEL ▲</pre>
+      <p><strong>Nhập 48 số bất kì</strong></p>
+      <pre class="formula">OPTN 2 2 SHIFT cos 1 0 ▶ SHIFT x⁻¹ □/□ ▶ 0 0 ▶ x² □/□ OPTN
+3 3 0 0 √□ ▶ 2 0 0 0 3 ALPHA ∫□ ▶ ▶ 0 0 0 0
+(-) 0 . ▶ 1 0 ▶ ▶ ALPHA tan OPTN 2 1 6 ALPHA ÷ 1 0 (
+= AC</pre>
+      </section>
+      <section class="qstep"><h3>Lượt 2.3</h3>
+      <pre class="formula">SHIFT 7 4 8 SHIFT 7 3 (-) SHIFT 7 3 (-) SHIFT 7 3 7 SHIFT 7 3
+x⁻¹ SHIFT 7 4 9 SHIFT 7 3 (-) SHIFT 7 3 7 SHIFT 7 3 8 SHIFT 7
+3 x⁻¹ ◀ × DEL ◀ × DEL ◀ × DEL ◀ × DEL ◀ × DEL ◀ × DEL
+◀ × DEL ◀ × DEL ◀ × DEL ◀ × DEL DEL DEL DEL DEL DEL DEL DEL DEL
+DEL DEL ◀ 1 2 3 4 5 6 ▶ ALPHA ∫□ ▶ ALPHA CALC 1 0 . 0
+0 0 ▶ 4 ▶ 1 ▶ 2 1 ▶ 6 2 ALPHA ∫□ ▶ ALPHA CALC 1 ▶
+2 0 3 6 2 ▶ 0 ▶ ▶ 2 3 CALC = = = ▲ ◀ ◀ ◀ ◀
+◀ ◀ DEL DEL DEL ▲</pre>
+      <p><strong>Nhập 48 số bất kì</strong></p>
+      <pre class="formula">OPTN 2 2 SHIFT cos 1 0 ▶ SHIFT x⁻¹ □/□ ▶ 0 0 ▶ x² □/□ OPTN 3 3 0 0
+√□ ▶ 2 0 0 0 3 ALPHA ∫□ 0 0 . ▶ 1 0 SHIFT + SHIFT x²
+SHIFT x 0 ▶ ▶ 2 0 . ▶ 1 0 0 SHIFT x² ▶ SHIFT x⁻¹ OPTN 3
+4 ▶ 0 SHIFT x² = AC</pre>
+      </section>
+      <section class="qstep"><h3>Lượt 2.4</h3>
+      <pre class="formula">SHIFT 7 3 (-) SHIFT 7 3 (-) SHIFT 7 3 7 SHIFT 7 3 (-) SHIFT 7 3
+8 SHIFT 7 3 x⁻¹ ◀ × DEL ◀ × DEL ◀ × DEL ◀ × DEL ◀ DEL ◀
+× DEL DEL DEL DEL DEL DEL DEL DEL DEL DEL DEL ◀ 1 2 3 4 5 6 ▶
+ALPHA ∫□ ALPHA (-) ALPHA CALC 1 0 . 0 0 0 6 2 1 1 ▶ 1 0
+2 ▶ 2 ALPHA ∫□ ALPHA °′″ ALPHA CALC 1 2 . 0 0 3 6 2 ▶ 0
+6 2 0 CALC = = = x ALPHA CALC SHIFT x x SHIFT ) 9 SHIFT )
+9 CALC = ◀ SHIFT . SHIFT 7 4 8 SHIFT 7 4 9 SHIFT 7 1 4
+SHIFT 7 3 7 ◀ × DEL ◀ × DEL ◀ × DEL ◀ × DEL DEL DEL DEL
+DEL DEL DEL DEL DEL DEL DEL ◀ 1 2 3 4 5 6 ▶ ALPHA ∫□ ▶ ALPHA
+CALC ALPHA (-) ALPHA ∫□ ▶ ALPHA CALC ALPHA °′″ ALPHA ∫□ ▶ ALPHA CALC 1 5
+▶ 2 3 CALC = = = = ▲ ◀ ◀ DEL DEL DEL ◀ ◀ ◀ ◀ ◀ ◀
+DEL DEL DEL DEL ▲</pre>
+      <p><strong>Nhập 48 số bất kì</strong></p>
+      <pre class="formula">. ▶ 1 0 ▶ ▶ ▶ 0 ▶ ▶ 2 0 . ▶ 1 0 0 SHIFT x² ▶ SHIFT x⁻¹ ▶ ▶
+2 0 0 SHIFT x² OPTN 3 4 ▶ 0 0 = AC</pre>
+      </section>
+      <section class="qnote"><h3>Ảnh đối chiếu</h3><img src="quickmax-step1.jpg" alt="Ảnh tài liệu Quickcpymax phần đầu"><img src="quickmax-step2.jpg" alt="Ảnh tài liệu Quickcpymax phần tiếp theo"></section>
+    </div>
+  </section>
+
+
+  <section class="card" id="inject-dino" style="margin-top:0; display:none;">
+    <h2>Inject — Khủng Long Mất Mạng</h2>
+    <div class="qnote" style="background:#241707;border:1px solid #ff8f26;padding:14px;margin:14px 0;">
+      <strong style="color:#ffb15c;">LƯU Ý QUAN TRỌNG</strong>
+      <p>Phải vào <strong>Quickcpymax trước</strong>, rồi mới thực hiện Inject. Không làm Inject trước khi vào Quickcpymax.</p>
+    </div>
+    <p class="sub">Casio fx-580VN X</p>
+    <p>Nhập lần lượt từng phần. Mỗi phần hiển thị thành nhóm 6 dòng để dễ nhìn.</p>
+    <section class="qstep">
+      <h3>Inject — phần 1 (6 dòng)</h3>
+      <pre class="formula" id="dino-hex-1">A8 9F 30 30 E0 A0 30 30 60 8C 30 30 34 7B 31 30
+E0 D9 2E D3 22 79 31 30 34 7B 31 30 E2 D9 B0 D3
+22 79 31 30 34 7B 31 30 B0 D3 AA EC A8 9F 30 30
+B8 79 32 30 34 7B 31 30 00 3F C0 3F 64 8E 30 30
+34 7B 31 30 0A 01 A4 EC CC 3D 32 30 34 7B 31 30
+20 2E 10 10 48 98 30 30 02 26 31 30 B5 EC 74 89</pre>
+      <button class="small copy-code" data-copy="dino-hex-1" type="button">Copy phần 1</button>
+    </section>
+    <section class="qstep">
+      <h3>Inject — phần 2 (6 dòng)</h3>
+      <pre class="formula" id="dino-hex-2">31 30 FC FF A6 A8 30 30 62 EA A0 9C 30 30 30 30
+30 30 34 7B 31 30 63 EA 2E 00 D2 03 32 30 34 7B
+31 30 00 2E 10 10 48 98 30 30 02 26 31 30 D5 EC
+7E 94 30 30 02 26 31 30 62 EA A8 9F 30 30 DC 98
+32 30 30 30 30 30 74 89 31 30 88 EC A8 9F 30 30
+9A 6D 31 30 30 30 74 89 31 30 00 00 A6 A8 30 30</pre>
+      <button class="small copy-code" data-copy="dino-hex-2" type="button">Copy phần 2</button>
+    </section>
+    <section class="qstep">
+      <h3>Inject — phần 3 (6 dòng)</h3>
+      <pre class="formula" id="dino-hex-3">30 EA A0 9C 30 30 30 30 30 30 02 26 31 30 0E D8
+EA F5 32 30 0C EC 31 30 C0 D9 02 26 31 30 00 00
+21 9C 30 30 4A C6 31 30 74 1F 32 30 34 7B 31 30
+31 EA 2C 00 D2 03 32 30 34 7B 31 30 9A EA 00 FE
+A8 9F 30 30 D8 39 31 30 0C EC 31 30 C8 D9 74 89
+31 30 30 EA A8 9F 30 30 9E 3B 31 30 21 9C 30 30</pre>
+      <button class="small copy-code" data-copy="dino-hex-3" type="button">Copy phần 3</button>
+    </section>
+    <section class="qstep">
+      <h3>Inject — phần 4 (6 dòng)</h3>
+      <pre class="formula" id="dino-hex-4">4A C6 31 30 74 1F 32 30 34 7B 31 30 9A EA 00 01
+A8 9F 30 30 D8 39 31 30 02 26 31 30 BA EB D8 39
+31 30 34 7B 31 30 94 EB 00 02 D8 39 31 30 34 7B
+31 30 A4 EB 00 02 D8 39 31 30 B0 3A 31 30 1E D9
+74 1F 32 30 34 7B 31 30 9A EA 00 00 A8 9F 30 30
+D8 39 31 30 34 7B 31 30 BA EB 00 FE D8 39 31 30</pre>
+      <button class="small copy-code" data-copy="dino-hex-4" type="button">Copy phần 4</button>
+    </section>
+    <section class="qstep">
+      <h3>Inject — phần 5 (6 dòng)</h3>
+      <pre class="formula" id="dino-hex-5">34 7B 31 30 94 EB 00 FF D8 39 31 30 34 7B 31 30
+A4 EB 00 FF D8 39 31 30 34 7B 31 30 D0 EA 31 EA
+D8 39 31 30 B0 3A 31 30 1E D9 74 1F 32 30 34 7B
+31 30 BA EB 00 FF A8 9F 30 30 D8 39 31 30 34 7B
+31 30 9A EA 00 FF D8 39 31 30 B0 3A 31 30 1E D9
+74 1F 32 30 34 7B 31 30 9A EA 00 FE A8 9F 30 30</pre>
+      <button class="small copy-code" data-copy="dino-hex-5" type="button">Copy phần 5</button>
+    </section>
+    <section class="qstep">
+      <h3>Inject — phần 6 (6 dòng)</h3>
+      <pre class="formula" id="dino-hex-6">D8 39 31 30 34 7B 31 30 D0 EA 00 00 D8 39 31 30
+0C EC 31 30 D8 D9 74 89 31 30 30 EA A8 9F 30 30
+9E 3B 31 30 21 9C 30 30 4A C6 31 30 74 1F 32 30
+A8 9F 30 30 60 8C 30 30 34 7B 31 30 0E 10 11 ED
+CC 3D 32 30 34 7B 31 30 0A 20 F5 EC CC 3D 32 30
+34 7B 31 30 0A 2C A4 EC CC 3D 32 30 7E 94 30 30</pre>
+      <button class="small copy-code" data-copy="dino-hex-6" type="button">Copy phần 6</button>
+    </section>
+    <section class="qstep">
+      <h3>Inject — phần 7 (6 dòng)</h3>
+      <pre class="formula" id="dino-hex-7">34 7B 31 30 F5 D0 01 01 D2 03 32 30 DE 3D 32 30
+34 7B 31 30 E4 D9 2E D3 22 79 31 30 B0 3A 31 30
+94 D9 74 1F 32 30 A8 9F 30 30 5C A0 30 30 34 7B
+31 30 B8 D9 01 00 D8 39 31 30 DA 7B 31 30 3A 03
+E0 E9 30 D7 2E D7 32 89 3B 00 00 00 74 1F 32 30
+80 04 1A D8 00 00 36 D8 20 10 56 D8 20 16 DC D8</pre>
+      <button class="small copy-code" data-copy="dino-hex-7" type="button">Copy phần 7</button>
+    </section>
+    <section class="qstep">
+      <h3>Inject — phần 8 (6 dòng)</h3>
+      <pre class="formula" id="dino-hex-8">20 2E 92 D8 00 00 02 D9 30 30 3E D9 00 00 94 D9
+E8 D9 EF D9 E6 D9 30 00 42 A6 30 2E 32 35 00 83
+42 D0 00 00 53 63 6F 72 65 3A 00 00 00 00 00 00
+00 00 00 00 00 00 00 00 78 00 FC 00 FC 00 FC 00
+F0 01 C0 27 E0 3F E0 3F C0 1F C0 0F 80 07 80 04
+80 04 80 00 00 03 80 07 C0 07 CF E7 CF E7 CF E7</pre>
+      <button class="small copy-code" data-copy="dino-hex-8" type="button">Copy phần 8</button>
+    </section>
+    <section class="qstep">
+      <h3>Inject — phần 9 (6 dòng)</h3>
+      <pre class="formula" id="dino-hex-9">CF E7 CF FF CF 3F CF 07 FF 07 FE 07 F8 07 C0 07
+C0 07 C0 07 C0 50 72 65 73 73 20 5B 53 68 69 66
+74 5D 20 74 6F 20 70 6C 61 79 20 61 67 61 69 6E
+00 59 6F 75 20 6C 6F 73 65 00 00 00 00 00 00 00
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00</pre>
+      <button class="small copy-code" data-copy="dino-hex-9" type="button">Copy phần 9</button>
+    </section>
+    <p class="note"><strong>Lưu ý dòng cuối:</strong> Nếu phần Inject cuối chưa đủ 6 dòng, thêm <code>00</code> vào các dòng còn thiếu cho đủ 6 dòng. Sau khi hoàn tất Inject, nhập tiếp Launcher, Token và Assign Hex ở dưới.</p>
+    <section class="qstep">
+      <h3>Launcher (D180)</h3>
+      <pre class="formula" id="dino-launcher">FD 24 30 30 DA 7B 31 30 FE 02 E0 E9 30 D7 2E D7
+32 89 31 30 30 30 74 1F 32 48</pre>
+      <button class="small copy-code" data-copy="dino-launcher" type="button">Copy Launcher</button>
+    </section>
+    <section class="qstep">
+      <h3>Token</h3>
+      <p>Chuỗi Token được ghi lại theo mục Token trong PDF:</p>
+      <pre class="formula" id="dino-token">@ 0 0 ʳ cos⁻¹( 10 cm▸in 𝐆 ▸Simp 0 % . % 2 LCM( 1 0 0 0 √( @ 2 𝒙</pre>
+      <button class="small copy-code" data-copy="dino-token" type="button">Copy Token</button>
+    </section>
+    <section class="qstep">
+      <h3>Assign Hex</h3>
+      <pre class="formula" id="dino-assign">@ = 1. 00 00 FD 24 E9 1F 23</pre>
+      <button class="small copy-code" data-copy="dino-assign" type="button">Copy Assign Hex</button>
+    </section>
+  </section>
+
+  <footer>
+    <div class="dev">Tool <span aria-hidden="true">·</span> by: phuc</div>
+  </footer>
+</main>
+ 
+<script>
+const $=id=>document.getElementById(id);
+const DEF=`SPACE q834
+0 0
+1 1
+2 2
+3 3
+4 4
+5 5
+6 6
+7 7
+8 8
+9 9
+f )
+h q(
+i q0
+k c
+l T11
+m T12
+n T13
+o T14
+p T15
+q T16
+r qh
+s qi
+t v
+u h
+v qv
+w j
+x k
+y l
+z qj
+ạ hex:F465
+ả hex:F474
+ã hex:F473
+à hex:F470
+á hex:F471
+ă hex:F475
+ằ hex:F435
+ắ hex:F434
+ẳ hex:F456
+ẵ hex:F457
+ặ hex:F433
+â hex:F472
+ầ hex:F432
+ấ hex:F431
+ẩ hex:F477
+ẫ hex:F436
+ậ hex:F437
+è hex:F478
+é hex:F479
+ẻ hex:F47B
+ẽ hex:F438
+ẹ hex:F439
+ê hex:F47A
+ề hex:F43B
+ế hex:F43A
+ể hex:F43C
+ễ hex:F43D
+ệ hex:F43E
+ì hex:F47C
+í hex:F47D
+ỉ hex:F47F
+ĩ hex:F47E
+ị hex:F448
+ò hex:F482
+ó hex:F483
+ỏ hex:F486
+õ hex:F485
+ọ hex:F487
+ô hex:F484
+ồ hex:F440
+ố hex:F43F
+ổ hex:F442
+ỗ hex:F441
+ộ hex:F445
+ơ hex:F44D
+ờ hex:F446
+ớ hex:F44E
+ở hex:F447
+ỡ hex:F46E
+ợ hex:F48E
+ù hex:F489
+ú hex:F48A
+ủ hex:F48C
+ũ hex:F48B
+ụ hex:F488
+ư hex:F46F
+ừ hex:F467
+ứ hex:F461
+ử hex:F468
+ữ hex:F476
+ự hex:F481
+ỳ hex:F45F
+ý hex:F48D
+ỷ hex:F466
+ỹ hex:F46B
+ỵ hex:F46C
+đ hex:F480
+Ạ hex:F410
+Ả hex:F454
+Ã hex:F453
+À hex:F450
+Á hex:F451
+Ă hex:F455
+Ằ hex:F415
+Ắ hex:F414
+Ẳ hex:F490
+Ẵ hex:F491
+Ặ hex:F413
+Â hex:F452
+Ầ hex:F412
+Ấ hex:F411
+Ẩ hex:F492
+Ẫ hex:F416
+Ậ hex:F417
+È hex:F458
+É hex:F459
+Ẻ hex:F45B
+Ẽ hex:F418
+Ẹ hex:F419
+Ê hex:F45A
+Ề hex:F41B
+Ế hex:F41A
+Ể hex:F41C
+Ễ hex:F41D
+Ệ hex:F41E
+Ì hex:F45C
+Í hex:F45D
+Ỉ hex:F42B
+Ĩ hex:F45E
+Ị hex:F428
+Ò hex:F462
+Ó hex:F463
+Ỏ hex:F429
+Õ hex:F430
+Ọ hex:F42A
+Ô hex:F464
+Ồ hex:F420
+Ố hex:F41F
+Ổ hex:F422
+Ỗ hex:F421
+Ộ hex:F423
+Ơ hex:F444
+Ờ hex:F426
+Ớ hex:F425
+Ở hex:F427
+Ỡ hex:F443
+Ợ hex:F424
+Ù hex:F469
+Ú hex:F46A
+Ủ hex:F42C
+Ũ hex:F42D
+Ụ hex:F42E
+Ư hex:F48F
+Ừ hex:F44B
+Ứ hex:F44A
+Ử hex:F44C
+Ữ hex:F44F
+Ự hex:F449
+Ỳ hex:F42F
+Ý hex:F46D
+Ỷ hex:F493
+Ỹ hex:F494
+Ỵ hex:F495
+Đ hex:F460`;
+const KEY={A:"7",B:"8",C:"9",D:"z",E:"x",F:"u"};
+const NM={j:"sin",k:"cos",v:"√",c:"x²",q:"SHIFT",w:"MENU",r:"CALC",Q:"ALPHA","[":"𝒙",C:"AC","!":"◀",$:"▶",E:"▲",R:"▼",o:"DEL",O:"✕",T:"OPTN",l:"tan",h:"ln",i:"log",z:"(−)",x:"°’”",u:"x⁻¹",".":"·"};
+let steps=[];
+try{$("tab").value=localStorage.getItem("spellTab3")||DEF}catch(_){$("tab").value=DEF}
+ 
+const conv=s=>[...s].map(c=>NM[c]||c).join(" ");
+const nameKeys=s=>s.split(/\s+/).map(tk=>{const m=tk.match(/^\((.+)\)×(\d+)$/);return m?"( "+conv(m[1])+" )×"+m[2]:conv(tk)}).join("   ");
+function show(v,kind){
+  if(!kind)return v;
+  if(kind==="lines")return v.split("\n").map(l=>{const i=l.indexOf(" → ");return i<0?l:l.slice(0,i+3)+nameKeys(l.slice(i+3))}).join("\n");
+  return nameKeys(v)}
+function caps(str){const f=document.createDocumentFragment();
+  [...str].forEach(c=>{const k=document.createElement("kbd"),n=NM[c]||c;k.textContent=n;if(n==="SHIFT")k.className="s";else if(n==="ALPHA")k.className="a";f.appendChild(k)});return f}
+function keysNode(v){const w=document.createElement("div");w.className="keys";
+  v.split(/\s+/).forEach(tk=>{const m=tk.match(/^\((.+)\)×(\d+)$/),g=document.createElement("span");g.className="grp";
+    if(m){g.append("(",caps(m[1]),")");const b=document.createElement("b");b.textContent="×"+m[2];g.append(b)}else g.append(caps(tk));w.appendChild(g)});return w}
+function linesNode(v){const w=document.createElement("div");
+  v.split("\n").forEach(l=>{const i=l.indexOf(" → "),d=document.createElement("div");d.className="line";
+    const c=document.createElement("span");c.className="ch";c.textContent=l.slice(0,i);d.append(c,keysNode(l.slice(i+3)));w.appendChild(d)});return w}
+ 
+function parseTab(s){const f={},h={};
+  s.split("\n").forEach(l=>{const m=l.trim().match(/^(\S+)\s+(.+)$/);if(!m)return;
+    const ch=m[1]==="SPACE"?" ":m[1],v=m[2].trim();
+    if(/^hex:/i.test(v))h[ch]=v.slice(4).replace(/\s/g,"").toUpperCase();else f[ch]=v});
+  return{f,h}}
+const asciiHex=ch=>{const c=ch.codePointAt(0);return c>32&&c<127?c.toString(16).toUpperCase().padStart(2,"0"):null};
+const rle=(a,fmt)=>{const o=[];for(let i=0;i<a.length;){let j=i;while(j<a.length&&a[j]===a[i])j++;o.push(j-i>1?`(${fmt(a[i])})×${j-i}`:fmt(a[i]));i=j}return o.join(" ")};
+ 
+// A: 5 khe + 1 khe sau x10, B và C: 7 khe + 1 khe sau x10
+// ô vàng (nửa đầu khe 4 của A, khe 6 của B/C, và khe sau x10) không được có chữ A-F
+const cap=i=>i===0?6:8;
+function bad(vi,idx,b){const first=vi===0?3:5,e=vi===0?5:7;
+  return idx===e?/[A-F]/.test(b):idx===first?/[A-F]/.test(b[0]):false}
+ 
+function build(){
+  const mode=$("pad").value;
+  const all0=[...$("t").value.normalize("NFC")].slice(0,17);
+  if(!all0.length)return{err:"Nhập chữ trước đã."};
+  const c1=all0;
+  const padL=c0=>{const diff=17-c0.length,L=mode==="l"?diff:mode==="c"?Math.floor(diff/2):0;return[...Array(L).fill(" "),...c0,...Array(diff-L).fill(" ")]};
+  const chars=padL(c1);
+  const {f,h}=parseTab($("tab").value);
+  const plan=chars.map(ch=>f[ch]?{ch,f:f[ch]}:{ch,hex:h[ch]||asciiHex(ch)});
+  const miss=[...new Set(plan.filter(p=>!p.f&&!p.hex).map(p=>p.ch))];
+  if(miss.length)return{err:"Chưa có hex cho các chữ dưới đây. Điền hex (dạng F4??) lấy từ bảng ký tự của máy.",miss};
+  const bh=plan.filter(p=>p.hex&&!/^[0-9A-F]{2}([0-9A-F]{2})?$/.test(p.hex));
+  if(bh.length)return{err:"Hex chưa hợp lệ ở bảng ký tự: "+[...new Set(bh.map(p=>p.ch))].join(" ")};
+  const all=[...plan.filter(p=>p.hex).map(p=>p.hex.match(/../g)),["3C","23"]];
+  const vars=[{s:[]}];let cur=0;
+  const next=()=>{if(cur>=2)return false;vars.push({s:[]});cur++;return true};
+  for(const u of all){
+    for(let g=0;g<60;g++){
+      const v=vars[cur],n=v.s.length;
+      if(n+u.length>cap(cur)){while(v.s.length<cap(cur))v.s.push({b:"20",t:"20"});if(!next())return{err:"Câu này cần hơn 3 biến, tài liệu chỉ hướng dẫn tối đa 3. Hãy rút ngắn câu hoặc dùng chữ có công thức 1."};continue}
+      if(u.some((b,j)=>bad(cur,n+j,b))){v.s.push({b:"20",t:"20"});continue}
+      u.forEach((b,j)=>v.s.push({b,t:"need",g:j===0}));break}}
+  const letters=all.flat().join("").match(/[A-F]/g)||[];
+  const S=vars.flatMap((v,i)=>[...(i?[{t:"dot"}]:[]),...v.s]);
+  const first=S.findIndex(i=>i.t!=="need"),nav=[];
+  if(first>=0)for(let i=S.length-1;i>=first;i--){const x=S[i];if(x.t==="need"){if(x.g)nav.push("!")}else nav.push(x.t==="20"?"o":"oo")}
+  const spaces=plan.filter(p=>p.ch===" ").length,viet=plan.filter(p=>/[^\u0000-\u007f]/.test(p.ch)).length;
+  return{plan,chars,vars,n:vars.length,letters,nav,typed:plan.map(p=>({ch:p.ch,k:p.f||"$"})),rand:17-spaces-viet,spaces,viet};
+}
+ 
+function render(r){
+  if(r.err){
+    $("out").innerHTML=`<div class="card err"><p></p><div id="ml"></div></div>`;
+    $("out").querySelector("p").textContent=r.err;steps=[];
+    if(r.miss){const ml=$("ml");r.miss.forEach(c=>{const d=document.createElement("div");d.className="miss";
+      d.innerHTML=`<b></b><input type="text" maxlength="4" placeholder="F4??" aria-label="Hex của chữ">`;
+      d.querySelector("b").textContent=c;d.querySelector("input").dataset.ch=c;ml.appendChild(d)});
+      const b=document.createElement("button");b.textContent="Lưu và Spell lại";b.onclick=()=>{
+        let add="";ml.querySelectorAll("input").forEach(i=>{const v=i.value.trim().toUpperCase();if(/^[0-9A-F]{4}$/.test(v))add+=`\n${i.dataset.ch} hex:${v}`});
+        if(add){$("tab").value=$("tab").value.trimEnd()+add;spell()}};ml.appendChild(b)}
+    return}
+  const nameOf=["A","B","C"];
+  const vtxt=r.vars.map((v,i)=>{const m=i?7:5,main=v.s.slice(0,m).map(x=>x.b).join(""),ex=v.s.length>m?"×10 "+v.s[m].b:"";
+    return nameOf[i]+"=1."+(i?"":"0000")+main+ex}).join(":\n");
+  const lt=rle(r.letters,l=>"q73"+KEY[l]);
+  const c5={1:["q748 !Oo","𝒙@","123456789𝒙:\n@=A","r==E!"],2:["q749 q748 (!Oo)×2","𝒙@@","123456789𝒙:\n@=B:\n@=A","r===E!"],3:["q714 q749 q748 (!Oo)×3","𝒙@@@","𝒙:\n@=C:\n@=B:\n@=A","r====E!"]}[r.n];
+  steps=[
+   {h:"Bước 1: Chuẩn bị",rows:[["Câu đủ 17 ký tự (dấu cách thay bằng /)",r.chars.join("").replace(/ /g,"/")],
+     ["Ký tự phải dùng hex",r.plan.filter(p=>p.hex).map(p=>p.ch+"="+p.hex).join("  ")||"không có"]]},
+   {h:"Bước 2: Bắt đầu",rows:[["Đặt lại, vào LineI/O","q93==qw13",1],["Basic Overflow","[Qrq[[q)9q)999r=C!oor=!q.",1]]},
+   {h:"Bước 3: Gán hex",rows:[
+     ["Lấy các chữ cái A-F theo thứ tự ("+r.letters.join(" ")+")",lt||"không có chữ cái nào",1],
+     ["Xóa bớt",`(!Oo)×${r.letters.length}`,1],
+     ["Rồi spam DEL đến khi chỉ còn 𝒙 và "+r.letters.join(""),""],
+     ["Nhập vào máy (chữ A-F là các chữ vừa lấy, ×10 là phím ×10)","𝒙:\n"+vtxt],
+     ["Sau khi nhập xong","r="+"=".repeat(r.n),1]],
+     note:"Mỗi biến có khe 2 chữ số: A có 5 khe và 1 khe sau ×10, B và C có 7 khe và 1 khe sau ×10. Chữ A-F không được nằm ở ô tô vàng, nếu bị thì trang tự chèn 20."},
+   {h:"Bước 4: Vào 110an",rows:[["Basic Overflow","[Qrq[[q)9q)9r=!",1],["Lấy an, rồi bấm 100 số bất kỳ và CALC =","q.q.!!oRq8R26!!$9o!)+",1],["Basic Overflow lần nữa","[Qrq[[q)9q)9r=!q.",1]]},
+   {h:`Bước 5: Spell (${r.n} biến)`,rows:[["Bấm",c5[0],1],["Spam DEL đến khi còn",c5[1]],["Nhập",c5[2]],["Rồi bấm",c5[3],1]]},
+   {h:"Bước 5b: Dọn byte thừa",rows:[["Từ cuối chuỗi lùi về: ◀ đi qua 1 chữ cần giữ, DEL xóa 20, DEL DEL xóa “1.”",r.nav.length?r.nav.join(" "):"không có byte thừa",r.nav.length?1:0],["Rồi spam ◀","!!!!!!!!!!",1]]},
+   {h:"Bước 5c: Nhập phần còn lại của câu",rows:[["Từng ký tự (▶ là chữ đã có sẵn, chỉ cần đi qua)",r.typed.map(x=>(x.ch===" "?"␣":x.ch)+" → "+x.k).join("\n"),"lines"],
+     [`Con trỏ phải đang ở trước chữ C cuối dãy. Số ngẫu nhiên = 17 − dấu cách − chữ có dấu = 17 − ${r.spaces} − ${r.viet} = ${r.rand}. Bấm ${r.rand} số bất kỳ rồi`,"q($2[r=",1]]},
+   {h:"Bước 6: Hoàn thành",rows:[["Bấm =","Hiện câu ở dòng thứ 3 từ trên xuống là thành công. Nếu đơ thì có bước nào đó chưa đúng."]]}];
+  draw();
+}
+function draw(){
+  const out=$("out");out.textContent="";
+  steps.forEach(s=>{const sec=document.createElement("section");sec.className="card step";
+    const h=document.createElement("h3");h.textContent=s.h;sec.appendChild(h);
+    s.rows.forEach(([a,b,kind])=>{const row=document.createElement("div");row.className="row";
+      const l=document.createElement("span");l.className="l";l.textContent=a;row.appendChild(l);
+      if(b){if(kind==="lines")row.appendChild(linesNode(b));else if(kind)row.appendChild(keysNode(b));
+        else{const c=document.createElement("code");c.textContent=b;row.appendChild(c)}}
+      sec.appendChild(row)});
+    if(s.note){const p=document.createElement("p");p.className="note";p.textContent=s.note;sec.appendChild(p)}
+    out.appendChild(sec)});
+}
+const plainText=()=>steps.map(s=>s.h+"\n"+s.rows.map(([a,b,k])=>a+(b?"\n"+show(b,k):"")).join("\n")).join("\n\n");
+ 
+function spell(){
+  const out=$("out");
+  try {
+    try { localStorage.setItem("spellTab3", $("tab").value); } catch(_) {}
+    render(build());
+    $("st").textContent="";
+  } catch(err) {
+    out.textContent="";
+    const card=document.createElement("section"); card.className="card err";
+    const msg=document.createElement("p"); msg.textContent="Có lỗi khi tạo công thức: " + (err && err.message ? err.message : String(err));
+    card.appendChild(msg); out.appendChild(card);
+    $("st").textContent="";
+    console.error(err);
+  }
+}
+function updateMode(){
+  const max=17;
+  $("t").maxLength=max;
+  $("cnt").textContent=[...$("t").value].length+"/"+max;
+  $("hint").textContent="Tối đa 17 ký tự (tính cả dấu cách). Thiếu thì web tự thêm dấu cách cho đủ.";
+  $("lt").textContent="Text to Spell";
+  $("t").placeholder="Nhập câu cần spell";
+}
+$("t").addEventListener("input",()=>{$("cnt").textContent=[...$("t").value].length+"/17";});
+$("t").addEventListener("keydown",e=>{if(e.key==="Enter")spell()});
+$("go").onclick=spell;
+$("copy").onclick=async()=>{if(!steps.length){$("st").textContent="Chưa có kết quả.";return}
+  try{await navigator.clipboard.writeText(plainText());$("st").textContent="Đã copy"}catch(_){$("st").textContent="Không copy được"}};
+$("cnt").textContent="0/17";
+updateMode();
+
+const pageChoice = document.getElementById('page-choice');
+if (pageChoice) pageChoice.addEventListener('change', () => {
+  const choice = pageChoice.value;
+  document.getElementById('spell-view').style.display = choice === 'spell' ? '' : 'none';
+  document.getElementById('quickmax').style.display = choice === 'quickcpymax' ? '' : 'none';
+  document.getElementById('inject-dino').style.display = choice === 'inject-dino' ? '' : 'none';
+  window.scrollTo({top: 0, behavior: 'smooth'});
+});
+document.querySelectorAll('.copy-code').forEach(button => {
+  button.addEventListener('click', async () => {
+    const target = document.getElementById(button.dataset.copy);
+    try {
+      await navigator.clipboard.writeText(target.innerText);
+      const oldLabel = button.textContent;
+      button.textContent = 'Đã copy!';
+      setTimeout(() => button.textContent = oldLabel, 1500);
+    } catch (_) {
+      const range = document.createRange();
+      range.selectNodeContents(target);
+      const selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
+      button.textContent = 'Đã chọn mã — nhấn Ctrl+C';
+    }
+  });
+});
+
+</script>
+</body>
+</html>
